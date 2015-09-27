@@ -12,6 +12,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -120,7 +121,9 @@ class SiteController extends Controller
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
+          $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if ($user = $model->signup()) {
+                //$model->imageFile = UploadedFile::getInstance($model, 'imageFile');
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
@@ -168,4 +171,5 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
 }

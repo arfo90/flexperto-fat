@@ -4,6 +4,7 @@ namespace frontend\models;
 use common\models\User;
 use yii\base\Model;
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * Signup form
@@ -14,6 +15,8 @@ class SignupForm extends Model
     public $email;
     public $password;
     public $mobileNumber;
+    public $imageFile;
+    public $addressImage;
 
     /**
      * @inheritdoc
@@ -35,7 +38,9 @@ class SignupForm extends Model
             ['password', 'string', 'min' => 6],
 
             ['mobileNumber', 'required'],
-            ['mobileNumber', 'integer', 'min' => 8]
+            ['mobileNumber', 'integer', 'min' => 8],
+
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg']
         ];
     }
 
@@ -53,6 +58,8 @@ class SignupForm extends Model
             $user->mobileNumber = $this->mobileNumber;
             $user->setPassword($this->password);
             $user->generateAuthKey();
+            $user->addressImage = 'uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+            $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
             if ($user->save()) {
                 return $user;
             }
@@ -60,4 +67,15 @@ class SignupForm extends Model
 
         return null;
     }
+
+    // public function upload()
+    // {
+    //     if ($this->validate()) {
+    //         $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
 }
