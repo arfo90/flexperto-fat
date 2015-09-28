@@ -2,4 +2,4 @@ vendor/
 yii
 composer.lock
 composer.phar
-frontend/web/uploads
+frontend/web/uploads/**
