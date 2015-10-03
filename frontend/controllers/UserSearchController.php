@@ -8,6 +8,7 @@ use frontend\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * UserSearchController implements the CRUD actions for User model.
@@ -84,8 +85,9 @@ class UserSearchController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            $model->saveImage();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

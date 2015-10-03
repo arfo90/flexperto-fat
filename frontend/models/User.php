@@ -22,6 +22,7 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord
 {
+    public $imageFile;
     /**
      * @inheritdoc
      */
@@ -40,6 +41,7 @@ class User extends \yii\db\ActiveRecord
             [['status', 'created_at', 'updated_at', 'mobile_number', 'mobileNumber'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'addressImage'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
+            //[['imageFile'], 'file', 'extensions' => 'png, jpg']
         ];
     }
 
@@ -62,5 +64,13 @@ class User extends \yii\db\ActiveRecord
             'mobileNumber' => 'Mobile Number',
             'addressImage' => 'Address Image',
         ];
+    }
+
+    public function saveImage()
+    {
+      //$this->addressImage = 'uploads/' . $this->addressImage->baseName . '.' . $this->addressImage->extension;
+      $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+      $this->addressImage='uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+      $this->save();
     }
 }
