@@ -11,6 +11,6 @@ Please follow following steps,
 - for backend `/path/to/yii-application/backend/web/` and using the URL `http://backend/`
 
 ### troubleshooting
-- In case of error for new user signup, make sure your database has user table and in additional that check if following fields exists in user table -> mobileNumber, addressImage.
+- In case of error for new user signup, make sure your database has user table and in addition to that check if following fields exists in user table -> mobileNumber, addressImage.
 
 - In case of error for uploading profile picture for user make sure uploads folder exist in frontend/web directory.
